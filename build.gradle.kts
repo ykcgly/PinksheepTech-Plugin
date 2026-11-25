@@ -1,8 +1,9 @@
 plugins {
     java
+    id("com.gradleup.shadow") version "9.6.1"
 }
 
-group = "com.haiman233"
+group = "com.pinksheep"
 version = "1.1.3-standalone"
 
 java {
@@ -34,6 +35,9 @@ dependencies {
     compileOnly("org.yaml:snakeyaml:2.2")
     // Slimefun jar 的类签名引用了 JetBrains 注解；缺失时 javac 在特定推断场景会崩溃
     compileOnly("org.jetbrains:annotations:26.0.2")
+    // bStats 匿名统计（serviceId 35674）：必须 implementation 让类打进 jar，
+    // shadowJar 阶段 relocate 到插件包下，避免与其他附属的 bStats 冲突
+    implementation("org.bstats:bstats-bukkit:3.2.1")
 }
 
 configurations.compileClasspath {
@@ -56,12 +60,21 @@ tasks.processResources {
     }
 }
 
+// 未 shaded 的普通 jar（缺 bStats 类，仅供调试参考，不可部署）
 tasks.jar {
     archiveBaseName.set("PinksheepTech")
     archiveVersion.set(project.version.toString())
+    archiveClassifier.set("unshaded")
+}
+
+// 发布产物 = shaded jar（bStats relocate 进插件包，避免与其它附属冲突）
+tasks.shadowJar {
+    archiveBaseName.set("PinksheepTech")
+    archiveVersion.set(project.version.toString())
     archiveClassifier.set("")
+    relocate("org.bstats", "com.pinksheep.pinksheeptech.libs.bstats")
 }
 
 tasks.build {
-    dependsOn(tasks.jar)
+    dependsOn(tasks.shadowJar)
 }

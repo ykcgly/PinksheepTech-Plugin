@@ -41,12 +41,26 @@ public final class PinksheepTechPlugin extends JavaPlugin implements SlimefunAdd
         getLogger().info("========================================================");
 
         if (!checkDependencies()) return;
+        initMetrics();
         try {
             Setup.loadAll();
             getLogger().info("PinksheepTech 加载成功，欢迎使用本附属");
         } catch (Throwable e) {
             getLogger().severe("PinksheepTech 加载过程中出现异常: " + e);
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * bStats 匿名统计（serviceId 35674）。在硬依赖检查通过后初始化——
+     * 插件若因缺依赖被禁用，不应上报虚假数据。统计失败绝不拖垮插件加载。
+     * 服务端级开关在 plugins/bStats/config.yml（bStats 全局 opt-out，无需本插件配置）。
+     */
+    private void initMetrics() {
+        try {
+            new org.bstats.bukkit.Metrics(this, 35674);
+        } catch (Throwable t) {
+            getLogger().warning("[bStats] 初始化失败，不影响功能: " + t);
         }
     }
 
