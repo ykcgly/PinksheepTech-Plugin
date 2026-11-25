@@ -23,8 +23,9 @@ import org.bukkit.inventory.ItemStack;
  *   <li>{@code nested} —— 顶层可嵌套组（{@link PSNestedGroup}），本项目为 {@code pinksheep}；
  *       在原版 NestedItemGroup 基础上追加按钮组渲染</li>
  *   <li>{@code sub} —— 子组，依赖 {@code parent}，须在其父组之后创建</li>
- *   <li>{@code button} —— 按钮组（{@link PSButtonGroup}）：不含物品，点击执行 {@code actions}
- *       （本项内容仅用 {@code link}，即聊天栏可点击链接）</li>
+ *   <li>{@code button} —— 按钮组（{@link PSButtonGroup}）：指南里的"按钮"，点击执行
+ *       {@code actions}（本项内容仅用 {@code link}）。普通 ItemGroup 实现，可容纳
+ *       占位符物品正常注册，但入口点击只触发 actions、不展示组内物品</li>
  *   <li>{@code seasonal} —— 季节性组（原版 Slimefun 无直接对应），按子组处理并读取
  *       {@code month}（仅信息保留，恒可见；与 RSC 的月份可见行为不同，此处沿用 HaimanTech2
  *       迁移时的取舍）</li>
@@ -95,7 +96,7 @@ public final class GroupLoader {
         String type = s.getString("type", "sub");
         NamespacedKey nk = new NamespacedKey(PST.plugin, id.toLowerCase(Locale.ROOT));
 
-        // 按钮组：不含物品，点击执行 actions（link 等），挂在嵌套组面板上
+        // 按钮组：点击执行 actions（link 等），挂在嵌套组面板上；占位符物品可正常注册进组
         if ("button".equalsIgnoreCase(type)) {
             if (!(parent instanceof PSNestedGroup nested)) {
                 PST.warn("物品组 " + id + " 的按钮组父级不是嵌套组，已跳过");

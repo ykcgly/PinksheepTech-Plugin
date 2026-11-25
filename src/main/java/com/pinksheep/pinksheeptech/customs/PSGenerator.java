@@ -30,7 +30,9 @@ import org.bukkit.inventory.ItemStack;
  * <p>行为与 RSC 的 CustomGenerator 对齐：</p>
  * <ul>
  *   <li>发电过程在能源网络请求 {@code getGeneratedOutput} 时推进（每粘液刻一次）</li>
- *   <li>发电前提：电容还有 {@code production} 的剩余空间，否则本刻暂停</li>
+ *   <li>仅当自身可储电（{@code capacity > 0}，即 {@link #isChargeable()}）时，
+ *       电容剩余空间不足 {@code production} 才暂停本刻燃烧；{@code capacity: 0}
+ *       的直通型发电机（如时空发电机）不做此检查、持续发电</li>
  *   <li>燃料匹配逐槽进行，命中即扣除 {@code fuel.input.amount} 个并开始燃烧</li>
  *   <li>燃烧结束产出副产物（如有），桶类燃料返还空桶</li>
  *   <li>默认界面与 RSC 默认菜单同布局</li>
@@ -53,7 +55,10 @@ public class PSGenerator extends SlimefunItem implements InventoryBlock, EnergyN
                        int[] inputSlots, int[] outputSlots, int capacity, int production,
                        List<MachineFuel> fuels, PSMenu menu) {
         super(group, item, recipeType, recipe);
-        this.capacity = Math.max(1, capacity);
+        // 与 RSC 一致：容量原样保留。capacity: 0 表示无缓冲的直通型发电机，
+        // EnergyNetComponent.isChargeable() 依此返回 false；钳到 1 会让
+        // "容量-电荷 < 产电量" 恒成立导致永不发电（时空发电机卡死的根因）
+        this.capacity = capacity;
         this.production = Math.max(1, production);
         this.inputSlots = inputSlots;
         this.outputSlots = outputSlots;
@@ -128,8 +133,9 @@ public class PSGenerator extends SlimefunItem implements InventoryBlock, EnergyN
                 if (inv.hasViewer()) {
                     processor.updateProgressBar(inv, progressSlot, op);
                 }
-                // 电容快满时暂停燃烧（与 RSC 一致，避免溢出浪费）
-                if (getCapacity() - getCharge(l) < getEnergyProduction()) {
+                // 仅可储电（capacity > 0）时检查电容空间，快满暂停燃烧避免溢出浪费；
+                // capacity: 0 的直通型发电机与 RSC 一样跳过此检查、持续发电
+                if (isChargeable() && getCapacity() - getCharge(l) < getEnergyProduction()) {
                     return 0;
                 }
                 op.addProgress(1);

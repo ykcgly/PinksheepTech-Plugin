@@ -33,7 +33,9 @@ public class PSSolarGenerator extends SlimefunItem implements EnergyNetProvider 
         super(group, item, recipeType, recipe);
         this.dayEnergy = Math.max(0, dayEnergy);
         this.nightEnergy = Math.max(0, nightEnergy);
-        this.capacity = Math.max(1, capacity);
+        // 与 RSC 一致：容量原样保留（config 里存在 capacity: 0 的条目，
+        // 钳到 1 会被能源网络误判为可储电组件）
+        this.capacity = capacity;
         this.lightLevel = Math.min(15, Math.max(0, lightLevel));
     }
 

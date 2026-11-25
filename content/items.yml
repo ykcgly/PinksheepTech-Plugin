@@ -41,6 +41,22 @@ ZUO_ZHE_XIANG_QING:
   placeable: false
   recipe_type: 'NULL'
 
+FY_TS:
+  lateInit: false
+  item_group: gonggao
+  item:
+    name: '&b提示'
+    lore:
+    - '&b当前版本为粉羊科技jar版本'
+    - '&c如果遇到问题'
+    - '&f请直接联系&d养坤场管理员&b(MC:&dykcgly&b)'
+    - "&fQQ:1424136122"
+    material_type: minecraft
+    material: STONE
+    amount: 1
+  placeable: false
+  recipe_type: 'NULL'
+
 
 
 
@@ -639,7 +655,7 @@ WYLDJ_XX:
   recipe_type: 'NULL'
 
 
-
+#### 占位符
 XXSXX:
   lateInit: false
   item_group: xiuxishi

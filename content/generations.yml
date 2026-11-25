@@ -58,18 +58,18 @@ LINGXI_ORE_LINKOLINE:
       minSize: 1
       replacement: stone
       environment: NORMAL
-CHUAN_ORE_LINKOLINE:
-  slimefun_id: "CHANOR" #夼矿石
-  areas:
-    1:
-      maxHeight: 30
-      minHeight: 10
-      most: 15
-      amount: 2
-      maxSize: 6
-      minSize: 3
-      replacement: netherrack
-      environment: NETHER
+#CHUAN_ORE_LINKOLINE:
+#  slimefun_id: "CHANOR" #夼矿石
+#  areas:
+#    1:
+#      maxHeight: 30
+#      minHeight: 10
+#      most: 15
+#      amount: 2
+#      maxSize: 6
+#      minSize: 3
+#      replacement: netherrack
+#      environment: NETHER
 CHONGNNEGDIAN_ORE_LINKOLINE:
   slimefun_id: "CHONGNENGDIANORE" #充能电矿
   areas:
