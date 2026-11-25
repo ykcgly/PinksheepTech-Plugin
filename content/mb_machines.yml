@@ -1,0 +1,75 @@
+LUOJI_LIXIN_JI:
+  item_group: chilunluoji
+  item:
+    name: "&f&l☢ {#f33232}离{#b0bf51}心{#a7e9d5}机 &f&l☢"
+    lore:
+    - '{#d9afd9}使{#ceb6da}用{#c3bddc}此{#b8c4dd}结{#adcbde}构{#a2d2e0}机{#97d9e1}器'
+    - '{#f866f8}分{#f063da}离{#e960bb}多{#e15d9d}重{#d95b7e}压{#d15860}缩{#ca5541}物{#c25223}质'
+    material: CRAFTING_TABLE
+  recipe:
+    1:
+      material: REDSTONE_LAMP
+    2:
+      material: ANVIL
+    3:
+      material: REDSTONE_LAMP  
+    4:
+      material: CHAIN    
+    5:
+      material: GRINDSTONE
+    6:
+      material: CHAIN 
+    7:
+      material: GLOWSTONE     
+    8:
+      material: DISPENSER
+    9:
+      material: GLOWSTONE
+  work: 5
+  sound: EXPLOSIVE_BOW_HIT_SOUND
+  recipes:
+    SHIJIE_DING:
+      input:
+        1:
+          material_type: slimefun
+          material: BOOSTED_URANIUM
+          amount: 1
+        2:
+          material_type: slimefun
+          material: HARDENED_METAL_INGOT
+          amount: 1
+        3:
+          material_type: slimefun
+          material: BOOSTED_URANIUM
+          amount: 1
+        4:
+          material_type: slimefun
+          material: SCYSCK
+          amount: 1
+        5:
+          material_type: slimefun
+          material: SCYSDYY
+          amount: 1
+        6:
+          material_type: slimefun
+          material: SCYSMDS
+          amount: 1
+        7:
+          material_type: slimefun
+          material: REINFORCED_ALLOY_INGOT
+          amount: 1
+        8:
+          material_type: slimefun
+          material: BLISTERING_INGOT_3
+          amount: 1
+        9:
+          material_type: slimefun
+          material: REINFORCED_ALLOY_INGOT 
+          amount: 1       
+      output:
+        material_type: slimefun
+        material: WORD_IRON
+        amount: 1
+
+
+#================================================================================
